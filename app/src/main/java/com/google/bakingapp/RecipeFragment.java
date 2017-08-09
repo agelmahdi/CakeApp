@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 
 public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeOnClickHandler {
+    private static final String RECIPE = "detail_recipe";
 
     private static final String RECIPES ="recipes" ;
     private RecyclerView recyclerView;
@@ -48,7 +49,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeOnCl
     public void onClickRecipe(Recipe id,int po) {
 
         Intent intent = new Intent(getContext(), DetailsActivity.class);
-        intent.putExtra("detail_recipe",id);
+        intent.putExtra(RECIPE,id);
         startActivity(intent);
 
     }

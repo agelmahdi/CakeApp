@@ -1,8 +1,13 @@
 package com.google.bakingapp;
 
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.bakingapp.Adpater.IngredientAdapter;
 import com.google.bakingapp.Model.Ingredients;
 import com.google.bakingapp.Model.Recipe;
+import com.google.bakingapp.Widget.RecipeWidgetProvider;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +42,9 @@ import java.util.ArrayList;
 
 public class IngredientFragment extends Fragment {
     private static final String INGREDIENTS = "Ingredients";
+    private static final String RECIPE = "detail_recipe";
+    private static final String RECIPES = "recipe";
+
     private RecyclerView recyclerView;
     private ArrayList<Ingredients> mIngredientses;
     private IngredientAdapter ingredientAdapter;
@@ -67,7 +77,7 @@ public class IngredientFragment extends Fragment {
         }
         netError =(TextView)rootView.findViewById(R.id.net_work_error_ing);
         Intent intent = getActivity().getIntent();
-        recipe = intent.getParcelableExtra("detail_recipe");
+        recipe = intent.getParcelableExtra(RECIPE);
         pDialog = new ProgressDialog(getContext());
         pDialog.setCancelable(false);
         mIngredientses = new ArrayList<>();
@@ -78,8 +88,32 @@ public class IngredientFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         ingredientAdapter = new IngredientAdapter( mIngredientses);
         recyclerView.setAdapter(ingredientAdapter);
+
         IngredientRequest();
 
+        FloatingActionButton fab =(FloatingActionButton) rootView.findViewById(R.id.widget_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppWidgetManager manager = AppWidgetManager.getInstance(getContext()) ;
+                int[] widgets = manager.getAppWidgetIds(new ComponentName(getContext(),RecipeWidgetProvider.class));
+
+                for(int widget:widgets){
+                    SharedPreferences appSharedPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(recipe);
+                    prefsEditor.putString(RECIPES, json);
+                    prefsEditor.apply();
+                    Intent widgetUpdater = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    widgetUpdater.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,widget);
+                    getContext().sendBroadcast(widgetUpdater);
+                }
+
+                Toast.makeText(getContext(),R.string.message_widget_added,Toast.LENGTH_LONG).show();
+            }
+        });
         return rootView;
 
     }
