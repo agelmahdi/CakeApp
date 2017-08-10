@@ -1,7 +1,6 @@
 package com.google.bakingapp.Widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -34,14 +33,11 @@ import static android.content.ContentValues.TAG;
 * Created by Ahmed El-Mahdi on 8/7/2017.
 */
 class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
-    private static final String INGREDIENTS = "Ingredients";
     private static final String RECIPES = "recipe";
     private Recipe recipe;
     private Ingredients ingredients;
     private Context mContext;
-    private List<Ingredients> mIngredients = new ArrayList<>();
-    Intent intent = new Intent();
-
+    private List<Ingredients> mIngredients=new ArrayList<>();
     public IngredientsListAdapter(Context applicationContext) {
         mContext =applicationContext;
     }
@@ -58,7 +54,7 @@ class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
         Gson gson = new Gson();
         String json = appSharedPrefs.getString(RECIPES, "");
          recipe = gson.fromJson(json, Recipe.class);
-        IngredientRequest();
+        IngredientRequest(recipe.getId()-1);
     }
 
     @Override
@@ -80,11 +76,11 @@ class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
         views.setTextViewText(R.id.widget_ingredient_name, ingredients.getIngredient());
         views.setTextViewText(R.id.widget_ingredient_measure, ingredients.getMeasure());
-        views.setTextViewText(R.id.widget_ingredient_measure, ingredients.getMeasure());
+        views.setTextViewText(R.id.widget_ingredient_quantity, ingredients.getQuantity());
         return views;
     }
 
-    private void IngredientRequest() {
+    private void IngredientRequest(final int id) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
 
@@ -97,7 +93,7 @@ class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
                         Log.d(TAG, response.toString());
 
                         try {
-                            JSONObject jsonObject = response.getJSONObject(recipe.getId()-1);
+                            JSONObject jsonObject = response.getJSONObject(id);
                             JSONArray array = jsonObject.getJSONArray("ingredients");
                             for (int j = 0; j < array.length(); j++) {
                                 JSONObject object = array.getJSONObject(j);

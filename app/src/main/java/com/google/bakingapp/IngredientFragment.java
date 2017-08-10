@@ -42,6 +42,7 @@ import java.util.ArrayList;
 
 public class IngredientFragment extends Fragment {
     private static final String INGREDIENTS = "Ingredients";
+    private static final String INGREDIENT_WIDGET = "Ingredient";
     private static final String RECIPE = "detail_recipe";
     private static final String RECIPES = "recipe";
 
@@ -54,6 +55,7 @@ public class IngredientFragment extends Fragment {
 
     private TextView netError;
     private static final String TAG = DetailsActivity.class.getSimpleName();
+
     public IngredientFragment() {
         // Required empty public constructor
     }
@@ -75,43 +77,46 @@ public class IngredientFragment extends Fragment {
 
             }
         }
-        netError =(TextView)rootView.findViewById(R.id.net_work_error_ing);
+        netError = (TextView) rootView.findViewById(R.id.net_work_error_ing);
         Intent intent = getActivity().getIntent();
         recipe = intent.getParcelableExtra(RECIPE);
         pDialog = new ProgressDialog(getContext());
         pDialog.setCancelable(false);
         mIngredientses = new ArrayList<>();
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view_ingredient);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_ingredient);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        ingredientAdapter = new IngredientAdapter( mIngredientses);
+        ingredientAdapter = new IngredientAdapter(mIngredientses);
         recyclerView.setAdapter(ingredientAdapter);
 
         IngredientRequest();
 
-        FloatingActionButton fab =(FloatingActionButton) rootView.findViewById(R.id.widget_fab);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.widget_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppWidgetManager manager = AppWidgetManager.getInstance(getContext()) ;
-                int[] widgets = manager.getAppWidgetIds(new ComponentName(getContext(),RecipeWidgetProvider.class));
+                AppWidgetManager manager = AppWidgetManager.getInstance(getContext());
+                int[] widgets = manager.getAppWidgetIds(new ComponentName(getContext(), RecipeWidgetProvider.class));
 
-                for(int widget:widgets){
+                for (int widget : widgets) {
                     SharedPreferences appSharedPrefs = PreferenceManager
                             .getDefaultSharedPreferences(getContext());
                     SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                    ArrayList<Ingredients> ingredients = ingredientAdapter.getIngredients();
+
                     Gson gson = new Gson();
                     String json = gson.toJson(recipe);
                     prefsEditor.putString(RECIPES, json);
                     prefsEditor.apply();
                     Intent widgetUpdater = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                    widgetUpdater.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,widget);
+                    widgetUpdater.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget);
                     getContext().sendBroadcast(widgetUpdater);
+
                 }
 
-                Toast.makeText(getContext(),R.string.message_widget_added,Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.message_widget_added, Toast.LENGTH_LONG).show();
             }
         });
         return rootView;
@@ -126,6 +131,7 @@ public class IngredientFragment extends Fragment {
             outState.putParcelableArrayList(INGREDIENTS, ingredients);
         }
     }
+
     private void IngredientRequest() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
@@ -143,7 +149,7 @@ public class IngredientFragment extends Fragment {
                         ArrayList<Ingredients> ingredientsArrayList = new ArrayList<>();
 
                         try {
-                            JSONObject jsonObject = response.getJSONObject(recipe.getId()-1);
+                            JSONObject jsonObject = response.getJSONObject(recipe.getId() - 1);
                             JSONArray array = jsonObject.getJSONArray("ingredients");
                             for (int j = 0; j < array.length(); j++) {
                                 JSONObject object = array.getJSONObject(j);
@@ -152,14 +158,11 @@ public class IngredientFragment extends Fragment {
                                 ingredientsArrayList.add(ingredients);
                             }
 
-                            if (ingredientsArrayList!=null){
+                            if (ingredientsArrayList != null) {
                                 if (ingredientAdapter != null) {
                                     ingredientAdapter.add(ingredientsArrayList);
                                 }
                             }
-
-
-
 
 
                         } catch (JSONException e) {
@@ -175,7 +178,7 @@ public class IngredientFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-               netError.setVisibility(View.VISIBLE);
+                netError.setVisibility(View.VISIBLE);
                 hideDialog();
             }
         });
@@ -183,6 +186,7 @@ public class IngredientFragment extends Fragment {
         // Adding request to request queue
         queue.add(req);
     }
+
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

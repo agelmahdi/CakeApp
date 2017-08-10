@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.google.bakingapp.MainActivity;
+import com.google.bakingapp.DetailsActivity;
 import com.google.bakingapp.R;
 
 /**
@@ -24,8 +24,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             remoteViews.setRemoteAdapter(R.id.ingredient_listview, adapterIntent);
 
 
-
-        Intent app = new Intent(context,MainActivity.class);
+        Intent app = new Intent(context,DetailsActivity.class);
         PendingIntent appLauncher = PendingIntent.getActivity(context,0,app,0);
         remoteViews.setPendingIntentTemplate(R.id.ingredient_listview,appLauncher);
         Log.d("widget","updated AppWidget");

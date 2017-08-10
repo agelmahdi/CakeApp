@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_anchorGravity="center"
     tools:context="com.google.bakingapp.StepsFragment">
-<android.support.v7.widget.RecyclerView
 
-    android:id="@+id/recycler_view_ingredient"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginRight="16dp"
-    tools:listitem="@layout/ingredient_list_item"
-    app:layout_anchorGravity="center"
 
- />
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recycler_view_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_anchorGravity="center"
+        tools:listitem="@layout/ingredient_list_item"
+
+        />
+
+    <TextView
+        android:id="@+id/net_work_error_ing"
+        style="@style/Base.TextAppearance.AppCompat.Display2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_horizontal|center"
+        android:text="@string/network_error"
+        android:visibility="invisible" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/widget_fab"
         android:layout_width="wrap_content"
@@ -27,16 +39,9 @@
         android:clickable="true"
         android:contentDescription="@string/add_widget"
         android:elevation="@dimen/fab_elevation"
+        android:src="@drawable/bookmark_plus"
         app:borderWidth="0dp"
+        app:layout_anchor="@id/recycler_view_ingredient"
         app:layout_anchorGravity="bottom|right|end"
         app:pressedTranslationZ="@dimen/ab_press_translation_z" />
-    <TextView
-    style="@style/Base.TextAppearance.AppCompat.Display2"
-    android:id="@+id/net_work_error_ing"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_gravity="clip_horizontal|center"
-android:text="@string/network_error"
-android:visibility="invisible"
-    />
-    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
