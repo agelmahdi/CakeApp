@@ -1,37 +1,64 @@
-<android.support.v7.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#eceff1"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="12dp"
+    card_view:layout_anchorGravity="center"
+    tools:context="com.google.bakingapp.DetailsStepFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/step_no_video"
+                style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/no_video_to_display" />
+
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+
+                android:id="@+id/step_video"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:focusable="true"
+                card_view:controller_layout_id="@layout/exo_playback_control_view"
+                card_view:resize_mode="fixed_width">
+
+            </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+
+
+        </FrameLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="12dp"
-            android:background="#eceff1"
-            card_view:layout_anchorGravity="center"
-            tools:context="com.google.bakingapp.DetailsStepFragment"
-            >
+            android:layout_height="wrap_content">
 
-        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+            <TextView
+                android:id="@+id/step_description"
+                style="@style/Base.TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:visibility="gone" />
 
-            android:id="@+id/step_video"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            app:controller_layout_id="@layout/exo_playback_control_view"
-            app:resize_mode="fixed_width" >
-
-        </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
-
-        <TextView
-            android:id="@+id/step_description"
-            style="@style/Base.TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:padding="8dp"
-            android:layout_marginTop="16dp" />
+        </ScrollView>
 
 
+    </LinearLayout>
 </android.support.v7.widget.CardView>

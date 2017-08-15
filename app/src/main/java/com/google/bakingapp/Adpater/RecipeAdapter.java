@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.bakingapp.Model.Recipe;
 import com.google.bakingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 .load(recipe.getImage())
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);*/
+        if (recipe.getImage().isEmpty()) { //url.isEmpty()
+            Picasso.with(mContext)
+                    .load(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(holder.image);
+
+        }else{
+            Picasso.with(mContext)
+                    .load(recipe.getImage())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(holder.image);
+        }
 
     }
 

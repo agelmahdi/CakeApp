@@ -7,4 +7,11 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="message_widget_added">Widget Added!</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="action_previous">Prev</string>
+    <string name="action_finish">Finish</string>
+    <string name="action_next">Next</string>
+    <string name="no_video_to_display">No Video To Display !</string>
+    <string name="no_ingredients">No Ingredients</string>
 </resources>

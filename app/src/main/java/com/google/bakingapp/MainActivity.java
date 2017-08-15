@@ -2,7 +2,9 @@ package com.google.bakingapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.bakingapp.Adpater.RecipeAdapter;
 import com.google.bakingapp.Model.Recipe;
+import com.google.bakingapp.Widget.RecipeWidgetProvider;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         pDialog = new ProgressDialog(this);
@@ -83,9 +89,18 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     }
     @Override
     public void onClickRecipe(Recipe id,int po) {
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(id);
+        prefsEditor.putString(RECIPES, json);
+        prefsEditor.apply();
+        RecipeWidgetProvider recipeWidgetProvider ;
 
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(RECIPE,id);
+
         startActivity(intent);
 
     }

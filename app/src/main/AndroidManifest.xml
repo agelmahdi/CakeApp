@@ -26,7 +26,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".StepDetails" />
+        <activity android:name=".StepDetails"
+            android:parentActivityName=".DetailsActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".DetailsActivity"/>
+        </activity>
 
         <receiver android:name=".DetailsStepFragment$MediaReceiver">
             <intent-filter>
@@ -43,8 +48,7 @@
                 android:resource="@xml/recipe_app_widget_info" />
         </receiver>
         <service android:name=".Widget.IngredientListFactory"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            />
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 

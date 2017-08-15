@@ -20,11 +20,32 @@
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </android.support.design.widget.AppBarLayout>
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.google.bakingapp.DetailsStepFragment"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_details_step" />
+        >
+
+        <FrameLayout
+            android:id="@+id/recipe_step_container"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"/>
+
+        <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recycler_view_videos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_anchorGravity="center"
+        tools:listitem="@layout/steps_list_item"
+
+        /></LinearLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>

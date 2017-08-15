@@ -1,60 +1,64 @@
 package com.google.bakingapp.Widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.bakingapp.AppConfig;
 import com.google.bakingapp.Model.Ingredients;
 import com.google.bakingapp.Model.Recipe;
 import com.google.bakingapp.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
 * Created by Ahmed El-Mahdi on 8/7/2017.
 */
 class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
-    private static final String RECIPES = "recipe";
+    private static final String RECIPES ="recipes" ;
     private Recipe recipe;
     private Ingredients ingredients;
     private Context mContext;
-    private List<Ingredients> mIngredients=new ArrayList<>();
+    private List<Ingredients> mIngredients;
+    private int mAppWidgetId;
+    private static final String INGREDIENT_WIDGET = "Ingredient";
+
+
     public IngredientsListAdapter(Context applicationContext) {
+
         mContext =applicationContext;
     }
 
     @Override
     public void onCreate() {
+        mIngredients=new ArrayList<>();
 
     }
 
     @Override
     public void onDataSetChanged() {
+
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString(RECIPES, "");
-         recipe = gson.fromJson(json, Recipe.class);
-        IngredientRequest(recipe.getId()-1);
+        String json = appSharedPrefs.getString(INGREDIENT_WIDGET, "");
+        if (json.isEmpty()){
+            Log.d(" No Ingredients ", json);
+        }
+        else {
+            Type type = new TypeToken<List<Ingredients>>(){}.getType();
+            mIngredients = gson.fromJson(json, type);
+        }
+
+       // IngredientRequest(recipe.getId()-1);
     }
 
     @Override
@@ -77,51 +81,30 @@ class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
         views.setTextViewText(R.id.widget_ingredient_name, ingredients.getIngredient());
         views.setTextViewText(R.id.widget_ingredient_measure, ingredients.getMeasure());
         views.setTextViewText(R.id.widget_ingredient_quantity, ingredients.getQuantity());
+
+        Bundle extras = new Bundle();
+
+        extras.putInt(RecipeWidgetProvider.EXTRA_ITEM, position);
+
+        Intent fillInIntent = new Intent();
+
+        fillInIntent.putExtra("homescreen_meeting",ingredients);
+
+        fillInIntent.putExtras(extras);
+
+        // Make it possible to distinguish the individual on-click
+
+        // action of a given item
+
+        views.setOnClickFillInIntent(R.id.widget_ingredient_name, fillInIntent);
+
+        // Return the RemoteViews object.
+
         return views;
     }
 
-    private void IngredientRequest(final int id) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
 
 
-
-        JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_RECIPE,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        Log.d(TAG, response.toString());
-
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(id);
-                            JSONArray array = jsonObject.getJSONArray("ingredients");
-                            for (int j = 0; j < array.length(); j++) {
-                                JSONObject object = array.getJSONObject(j);
-
-                                ingredients = new Ingredients(object);
-                                mIngredients.clear();
-                                mIngredients.add(ingredients);
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(mContext,
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-            }
-        });
-
-        // Adding request to request queue
-        queue.add(req);
-    }
     @Override
     public RemoteViews getLoadingView() {
         return null;
@@ -129,7 +112,7 @@ class IngredientsListAdapter implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
