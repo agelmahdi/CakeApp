@@ -33,8 +33,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeOnClickHandler {
     private static final String RECIPE = "detail_recipe";
-
-    private static final String RECIPES ="recipes" ;
+    private static final String RECIPES = "recipes";
     private RecyclerView recyclerView;
     private ArrayList<Recipe> mRecipes;
     private RecipeAdapter recipeAdapter;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private TextView netError;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,19 +60,20 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
             }
         }
-        netError =(TextView)findViewById(R.id.net_work_error_recipe);
+        netError = (TextView) findViewById(R.id.net_work_error_recipe);
 
         mRecipes = new ArrayList<>();
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recipeAdapter = new RecipeAdapter( mRecipes, this, this);
+        recipeAdapter = new RecipeAdapter(mRecipes, this, this);
         recyclerView.setAdapter(recipeAdapter);
 
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -87,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
             outState.putParcelableArrayList(RECIPES, recipes);
         }
     }
+
     @Override
-    public void onClickRecipe(Recipe id,int po) {
+    public void onClickRecipe(Recipe id, int po) {
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
@@ -96,14 +98,15 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         String json = gson.toJson(id);
         prefsEditor.putString(RECIPES, json);
         prefsEditor.apply();
-        RecipeWidgetProvider recipeWidgetProvider ;
+        RecipeWidgetProvider recipeWidgetProvider;
 
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra(RECIPE,id);
+        intent.putExtra(RECIPE, id);
 
         startActivity(intent);
 
     }
+
     private void RecipeRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                                 recipeArrayList.add(recipe);
                             }
 
-                            if (recipeArrayList!=null){
+                            if (recipeArrayList != null) {
                                 if (recipeAdapter != null) {
                                     recipeAdapter.add(recipeArrayList);
                                 }
@@ -156,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         // Adding request to request queue
         queue.add(req);
     }
+
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

@@ -48,7 +48,6 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
     private static final String INGREDIENTS = "Ingredients";
     private static final String INGREDIENT_WIDGET = "Ingredient";
     private static final String RECIPE = "detail_recipe";
-    private static final String RECIPES = "recipe";
     private static final String STEPS = "steps";
     private static final String SAVED_LAYOUT_MANAGER = "save";
 

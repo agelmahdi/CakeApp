@@ -13,6 +13,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     private Recipe recipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,6 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
     }
-
 
 
 }

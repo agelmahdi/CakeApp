@@ -15,21 +15,22 @@ import com.google.bakingapp.Model.Steps;
 
 import java.util.ArrayList;
 
-public class StepDetails extends AppCompatActivity implements StepsAdapter.StepsOnClickHandler{
-private Steps steps;
+public class StepDetails extends AppCompatActivity implements StepsAdapter.StepsOnClickHandler {
+    private Steps steps;
     private ArrayList<Steps> mSteps = new ArrayList<>();
     private RecyclerView recyclerViewVideos;
     private StepsAdapter videoAdapter;
-    private   FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     private DetailsStepFragment recipeStepFragment;
     private FragmentTransaction transaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_steps);
         Intent intent = getIntent();
         steps = intent.getParcelableExtra("detail_step");
-        mSteps=intent.getParcelableArrayListExtra("steps");
+        mSteps = intent.getParcelableArrayListExtra("steps");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.step_details_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -47,9 +48,9 @@ private Steps steps;
         recyclerViewVideos.setLayoutManager(layoutManager);
         recyclerViewVideos.setHasFixedSize(true);
 
-        videoAdapter = new StepsAdapter(new ArrayList<Steps>(), this,this);
+        videoAdapter = new StepsAdapter(new ArrayList<Steps>(), this, this);
         recyclerViewVideos.setAdapter(videoAdapter);
-        if (mSteps!=null){
+        if (mSteps != null) {
             if (videoAdapter != null) {
                 videoAdapter.add(mSteps);
             }
@@ -58,7 +59,7 @@ private Steps steps;
             Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
             finish();
         }
-        if (recipeStepFragment==null){
+        if (recipeStepFragment == null) {
             getSupportActionBar().setTitle(steps.getShortDescription());
             recipeStepFragment = DetailsStepFragment.newInstance(steps);
             transaction = fragmentManager.beginTransaction();
@@ -75,7 +76,7 @@ private Steps steps;
     protected void onResume() {
         super.onResume();
 
-        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -86,7 +87,7 @@ private Steps steps;
 
     @Override
     public void onClickStep(Steps Step, ArrayList<Steps> list, int position) {
-        if (recipeStepFragment!=null) {
+        if (recipeStepFragment != null) {
             transaction = fragmentManager.beginTransaction();
             transaction.remove(recipeStepFragment).commit();
         }

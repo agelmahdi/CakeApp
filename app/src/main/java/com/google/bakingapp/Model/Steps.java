@@ -17,7 +17,7 @@ public class Steps implements Parcelable {
 
         this.id = steps.getInt("id");
         this.shortDescription = steps.getString("shortDescription");
-        this.description=steps.getString("description");
+        this.description = steps.getString("description");
         this.videoURL = steps.getString("videoURL");
         this.thumbnailURL = steps.getString("thumbnailURL");
 

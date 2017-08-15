@@ -20,7 +20,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private ArrayList<Ingredients> mIngredientses = new ArrayList<>();
 
     public IngredientAdapter(ArrayList<Ingredients> mIngredientses) {
-        this.mIngredientses=mIngredientses;
+        this.mIngredientses = mIngredientses;
     }
 
     @Override
@@ -33,14 +33,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(Viewholder holder, int position) {
         final Ingredients ingredients = mIngredientses.get(position);
-        holder.quantity.setText( ingredients.getQuantity());
+        holder.quantity.setText(ingredients.getQuantity());
         holder.measure.setText(ingredients.getMeasure());
         holder.name.setText(ingredients.getIngredient());
 
 
     }
 
-    public void add(List<Ingredients> list){
+    public void add(List<Ingredients> list) {
         mIngredientses.clear();
         mIngredientses.addAll(list);
         notifyDataSetChanged();
@@ -49,18 +49,20 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public ArrayList<Ingredients> getIngredients() {
         return mIngredientses;
     }
+
     @Override
     public int getItemCount() {
         return mIngredientses.size();
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
-        TextView name,measure,quantity;
+        TextView name, measure, quantity;
+
         public Viewholder(View itemView) {
             super(itemView);
-            this.quantity = (TextView)itemView.findViewById(R.id.ingredient_quantity);
-            this.measure=(TextView)itemView.findViewById(R.id.ingredient_measure);
-            this.name=(TextView)itemView.findViewById(R.id.ingredient_name);
+            this.quantity = (TextView) itemView.findViewById(R.id.ingredient_quantity);
+            this.measure = (TextView) itemView.findViewById(R.id.ingredient_measure);
+            this.name = (TextView) itemView.findViewById(R.id.ingredient_name);
         }
     }
 }

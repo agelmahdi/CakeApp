@@ -19,13 +19,13 @@ import java.util.List;
  * Created by Ahmed El-Mahdi on 7/27/2017.
  */
 
-public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder>  {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder> {
     private ArrayList<Steps> mSteps = new ArrayList<>();
     private final StepsOnClickHandler mStepOnClickHandler;
     private Context context;
 
-    public StepsAdapter(ArrayList<Steps> mSteps, StepsOnClickHandler mStepOnClickHandler,Context context) {
-        this.mSteps=mSteps;
+    public StepsAdapter(ArrayList<Steps> mSteps, StepsOnClickHandler mStepOnClickHandler, Context context) {
+        this.mSteps = mSteps;
         this.mStepOnClickHandler = mStepOnClickHandler;
         this.context = context;
     }
@@ -33,6 +33,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder> 
     public interface StepsOnClickHandler {
         void onClickStep(Steps Step, ArrayList<Steps> list, int position);
     }
+
     @Override
     public StepsAdapter.Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
@@ -53,7 +54,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder> 
                     .error(R.drawable.placeholder)
                     .into(holder.stepImage);
 
-        }else{
+        } else {
             Picasso.with(context)
                     .load(steps.getThumbnailURL())
                     .placeholder(R.drawable.placeholder)
@@ -64,12 +65,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStepOnClickHandler.onClickStep(steps,mSteps,holder.getAdapterPosition());
+                mStepOnClickHandler.onClickStep(steps, mSteps, holder.getAdapterPosition());
 
             }
         });
     }
-    public void add(List<Steps> list){
+
+    public void add(List<Steps> list) {
         mSteps.clear();
         mSteps.addAll(list);
         notifyDataSetChanged();
@@ -90,11 +92,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Viewholder> 
         TextView stepName;
         ImageView stepImage;
         public final View mView;
+
         public Viewholder(View itemView) {
             super(itemView);
-            stepName = (TextView)itemView.findViewById(R.id.step_title);
-            stepImage = (ImageView)itemView.findViewById(R.id.step_image);
-            mView=itemView;
+            stepName = (TextView) itemView.findViewById(R.id.step_title);
+            stepImage = (ImageView) itemView.findViewById(R.id.step_image);
+            mView = itemView;
         }
     }
 }

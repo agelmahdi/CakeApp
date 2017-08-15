@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Recipe implements Parcelable {
 
-    private int id ;
+    private int id;
     private String name;
     private String servings;
     private String image;
@@ -46,17 +46,13 @@ public class Recipe implements Parcelable {
     private List<Ingredients> ingredient;
 
 
-
-
-
     public Recipe(JSONObject recipe) throws JSONException {
 
         this.id = recipe.getInt("id");
         this.name = recipe.getString("name");
-        this.servings=recipe.getString("servings");
+        this.servings = recipe.getString("servings");
         this.image = recipe.getString("image");
     }
-
 
 
     public int getId() {

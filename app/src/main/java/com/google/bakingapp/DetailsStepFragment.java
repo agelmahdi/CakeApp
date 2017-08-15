@@ -43,7 +43,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailsStepFragment extends Fragment implements ExoPlayer.EventListener{
+public class DetailsStepFragment extends Fragment implements ExoPlayer.EventListener {
     private Steps steps;
     private ArrayList<Steps> mlist;
     private TextView txtDescription, txtNoVideo;
@@ -52,7 +52,6 @@ public class DetailsStepFragment extends Fragment implements ExoPlayer.EventList
     private static MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
     private long currentPlayingPosition;
-    private boolean mLandscapeMode;
 
 
     private static final String TAG = DetailsStepFragment.class.getSimpleName();
@@ -93,7 +92,6 @@ public class DetailsStepFragment extends Fragment implements ExoPlayer.EventList
         fragment.setArguments(arguments);
         return fragment;
     }
-
 
 
     @Override
@@ -169,7 +167,6 @@ public class DetailsStepFragment extends Fragment implements ExoPlayer.EventList
         mMediaSession.setActive(true);
 
     }
-
 
 
     private class MySessionCallback extends MediaSessionCompat.Callback {

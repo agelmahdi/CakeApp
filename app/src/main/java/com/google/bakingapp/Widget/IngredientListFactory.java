@@ -10,7 +10,6 @@ import android.widget.RemoteViewsService;
 
 public class IngredientListFactory extends RemoteViewsService {
 
-    public static final String INGREDIENTS = "Ingredients";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {

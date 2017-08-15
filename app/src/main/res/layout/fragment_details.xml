@@ -6,59 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.google.bakingapp.DetailsFragment"
-    >
+    tools:context="com.google.bakingapp.DetailsFragment">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-
-    >
-    <TextView
-        android:text="@string/ingredients"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="sans-serif-condensed"
-         />
-    <android.support.v7.widget.RecyclerView
-
-        android:id="@+id/recycler_view_ingredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_anchorGravity="center"
-        tools:listitem="@layout/ingredient_list_item"
-
-        />
-    <TextView
-        android:text="@string/steps"
-        android:fontFamily="sans-serif-condensed"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_marginStart="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_steps"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        tools:listitem="@layout/steps_list_item"
-        app:layout_anchorGravity="center"
-        app:layoutManager="LinearLayoutManager"
+        android:orientation="vertical"
 
-        />
+        >
 
-</LinearLayout>
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/ingredients" />
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/recycler_view_ingredient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_anchorGravity="center"
+            tools:listitem="@layout/ingredient_list_item"
+
+            />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/steps" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_anchorGravity="center"
+            tools:listitem="@layout/steps_list_item"
+
+            />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/net_work_error_ing"
         style="@style/Base.TextAppearance.AppCompat.Display2"

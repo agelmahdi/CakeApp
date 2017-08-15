@@ -10,9 +10,8 @@ import org.json.JSONObject;
  * Created by Ahmed El-Mahdi on 7/23/2017.
  */
 
-public class Ingredients implements Parcelable{
+public class Ingredients implements Parcelable {
     private String quantity;
-
     private String measure;
     private String ingredient;
 
@@ -21,8 +20,9 @@ public class Ingredients implements Parcelable{
 
         this.quantity = jsonObject.getString("quantity");
         this.measure = jsonObject.getString("measure");
-        this.ingredient=jsonObject.getString("ingredient");
+        this.ingredient = jsonObject.getString("ingredient");
     }
+
     protected Ingredients(Parcel in) {
         quantity = in.readString();
         measure = in.readString();

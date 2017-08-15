@@ -24,15 +24,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private Context mContext;
     private final RecipeOnClickHandler mRecipeOnClickHandler;
+
     public RecipeAdapter(ArrayList<Recipe> list, Context mContext, RecipeOnClickHandler mRecipeOnClickHandler) {
         this.mContext = mContext;
-        this.mRecipes =list;
+        this.mRecipes = list;
         this.mRecipeOnClickHandler = mRecipeOnClickHandler;
     }
 
 
     public interface RecipeOnClickHandler {
-        void onClickRecipe(Recipe recipe,int position);
+        void onClickRecipe(Recipe recipe, int position);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecipeOnClickHandler.onClickRecipe(recipe,holder.getAdapterPosition());
+                mRecipeOnClickHandler.onClickRecipe(recipe, holder.getAdapterPosition());
             }
         });
        /* Picasso.with(mContext)
@@ -68,7 +69,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     .error(R.drawable.placeholder)
                     .into(holder.image);
 
-        }else{
+        } else {
             Picasso.with(mContext)
                     .load(recipe.getImage())
                     .placeholder(R.drawable.placeholder)
@@ -83,16 +84,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         mRecipes.addAll(recipes);
         notifyDataSetChanged();
     }
+
     public ArrayList<Recipe> getRecipes() {
         return mRecipes;
     }
+
     @Override
     public int getItemCount() {
         return mRecipes.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, servings ;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView title, servings;
         public ImageView image;
 
         public final View mView;
@@ -100,9 +103,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             this.title = (TextView) itemView.findViewById(R.id.recipe_title);
-            this.servings = (TextView)itemView.findViewById(R.id.recipe_servings);
-            this.image = (ImageView)itemView.findViewById(R.id.recipe_image);
-            mView=itemView;
+            this.servings = (TextView) itemView.findViewById(R.id.recipe_servings);
+            this.image = (ImageView) itemView.findViewById(R.id.recipe_image);
+            mView = itemView;
         }
 
 
