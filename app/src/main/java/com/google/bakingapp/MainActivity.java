@@ -54,12 +54,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         setSupportActionBar(myToolbar);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(RECIPES)) {
-                mRecipes = savedInstanceState.getParcelableArrayList(RECIPES);
 
-            }
-        }
         netError = (TextView) findViewById(R.id.net_work_error_recipe);
 
         mRecipes = new ArrayList<>();
@@ -71,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         recipeAdapter = new RecipeAdapter(mRecipes, this, this);
         recyclerView.setAdapter(recipeAdapter);
 
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        RecipeRequest();
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(RECIPES)) {
+                mRecipes = savedInstanceState.getParcelableArrayList(RECIPES);
+                recipeAdapter.add(mRecipes);
+            }
+            else {RecipeRequest();}
+        } else {RecipeRequest();}
     }
 
     @Override

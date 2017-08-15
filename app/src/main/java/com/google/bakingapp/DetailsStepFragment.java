@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -82,8 +83,18 @@ public class DetailsStepFragment extends Fragment implements ExoPlayer.EventList
         } else {
             txtNoVideo.setVisibility(View.VISIBLE);
         }
+
         return view;
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null && mStepsExoPlayer != null) {
+            currentPlayingPosition = savedInstanceState.getLong("land_play");
+            mStepsExoPlayer.seekTo(currentPlayingPosition);
+        }
+    }
+
 
     public static DetailsStepFragment newInstance(Steps step) {
         Bundle arguments = new Bundle();
@@ -220,7 +231,6 @@ public class DetailsStepFragment extends Fragment implements ExoPlayer.EventList
         if (mStepsExoPlayer != null) {
             mStepsExoPlayer.stop();
             mStepsExoPlayer.release();
-            mStepsExoPlayer = null;
         }
     }
 

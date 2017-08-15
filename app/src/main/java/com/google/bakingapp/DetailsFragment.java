@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -49,7 +48,6 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
     private static final String INGREDIENT_WIDGET = "Ingredient";
     private static final String RECIPE = "detail_recipe";
     private static final String STEPS = "steps";
-    private static final String SAVED_LAYOUT_MANAGER = "save";
 
     private RecyclerView recyclerViewIngredients;
     private RecyclerView recyclerViewSteps;
@@ -62,10 +60,10 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
     private ProgressDialog pDialog;
     private Ingredients ingredients;
     private Recipe recipe;
-    private boolean mTwoPane;
     private TextView netError;
     private LinearLayoutManager layoutManager;
-    private static Bundle mBundleRecyclerViewState;
+
+    private boolean mTwoPane;
 
     private static final String TAG = DetailsActivity.class.getSimpleName();
 
@@ -86,16 +84,8 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
         if (rootView.findViewById(R.id.two_pane_layout) != null) {
             mTwoPane = true;
         }
-        if (savedInstanceState != null) {
 
 
-            if (savedInstanceState.containsKey(INGREDIENTS)) {
-                mIngredientses = savedInstanceState.getParcelableArrayList(INGREDIENTS);
-
-            } else if (savedInstanceState.containsKey(STEPS)) {
-                mSteps = savedInstanceState.getParcelableArrayList(STEPS);
-            }
-        }
         netError = (TextView) rootView.findViewById(R.id.net_work_error_ing);
         recyclerViewSteps = (RecyclerView) rootView.findViewById(R.id.recycler_view_steps);
         Intent intent = getActivity().getIntent();
@@ -111,10 +101,9 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
         ingredientAdapter = new IngredientAdapter(mIngredientses);
         recyclerViewIngredients.setAdapter(ingredientAdapter);
         mSteps = new ArrayList<>();
-
-
         stepsAdapter = new StepsAdapter(mSteps, this, getContext());
         recyclerViewSteps.setAdapter(stepsAdapter);
+
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.widget_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +128,41 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
                 Toast.makeText(getContext(), R.string.message_widget_added, Toast.LENGTH_LONG).show();
             }
         });
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(INGREDIENTS)) {
+                mIngredientses = savedInstanceState.getParcelableArrayList(INGREDIENTS);
+                ingredientAdapter.add(mIngredientses);
 
+            }  if (savedInstanceState.containsKey(STEPS)) {
+                mSteps = savedInstanceState.getParcelableArrayList(STEPS);
+                Log.d("steps",mSteps.toString());
+                stepsAdapter.add(mSteps);
+            }
+
+            else {
+                DetailsRequest();
+            }
+        } else {
+            DetailsRequest();
+        }
         return rootView;
+
+    }
+
+    @Override
+    public void onClickStep(Steps Step, ArrayList<Steps> list, int position) {
+        if (!mTwoPane) {
+            Intent intent = new Intent(getContext(), StepDetails.class);
+            intent.putExtra("detail_step", Step);
+            intent.putParcelableArrayListExtra("steps", stepsAdapter.getSteps());
+            startActivity(intent);
+        } else {
+            DetailsStepFragment recipeStepFragment = DetailsStepFragment.newInstance(Step);
+            FragmentManager fragmentManager = getChildFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.recipe_step_container, recipeStepFragment);
+            transaction.commit();
+        }
 
     }
 
@@ -158,36 +180,6 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
         if (steps != null && !steps.isEmpty()) {
             outState.putParcelableArrayList(STEPS, steps);
         }
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        DetailsRequest();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        // save RecyclerView state
-        mBundleRecyclerViewState = new Bundle();
-        Parcelable listState = recyclerViewSteps.getLayoutManager().onSaveInstanceState();
-        mBundleRecyclerViewState.putParcelable(SAVED_LAYOUT_MANAGER, listState);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // restore RecyclerView state
-        if (mBundleRecyclerViewState != null) {
-            Parcelable listState = mBundleRecyclerViewState.getParcelable(SAVED_LAYOUT_MANAGER);
-            recyclerViewSteps.getLayoutManager().onRestoreInstanceState(listState);
-        }
-
     }
 
     private void DetailsRequest() {
@@ -269,20 +261,5 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepsOnCli
             pDialog.dismiss();
     }
 
-    @Override
-    public void onClickStep(Steps Step, ArrayList<Steps> list, int position) {
-        if (!mTwoPane) {
-            Intent intent = new Intent(getContext(), StepDetails.class);
-            intent.putExtra("detail_step", Step);
-            intent.putParcelableArrayListExtra("steps", stepsAdapter.getSteps());
-            startActivity(intent);
-        } else {
-            DetailsStepFragment recipeStepFragment = DetailsStepFragment.newInstance(Step);
-            FragmentManager fragmentManager = getChildFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.recipe_step_container, recipeStepFragment);
-            transaction.commit();
-        }
 
-    }
 }

@@ -3,11 +3,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_height="match_parent"
     android:background="#eceff1"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="12dp"
     card_view:layout_anchorGravity="center"
     tools:context="com.google.bakingapp.DetailsStepFragment">
 
@@ -17,8 +14,8 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/step_no_video"
@@ -31,15 +28,10 @@
                 android:text="@string/no_video_to_display" />
 
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-
                 android:id="@+id/step_video"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:focusable="true"
-                card_view:controller_layout_id="@layout/exo_playback_control_view"
-                card_view:resize_mode="fixed_width">
-
-            </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+                android:layout_height="match_parent"
+                android:focusable="true"/>
 
 
         </FrameLayout>
@@ -47,12 +39,12 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TextView
                 android:id="@+id/step_description"
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:maxHeight="48dp"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:visibility="gone" />
