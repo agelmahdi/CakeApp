@@ -16,24 +16,18 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/step_no_video"
-                style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/no_video_to_display" />
-
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                 android:id="@+id/step_video"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="true"/>
-
-
+            <TextView
+                android:id="@+id/step_no_video"
+                style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                android:layout_width="match_parent"
+                android:layout_height="411dp"
+                android:gravity="center"
+                android:text="@string/no_video_to_display" />
         </FrameLayout>
 
         <ScrollView
@@ -43,11 +37,10 @@
                 android:id="@+id/step_description"
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:maxHeight="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
-                android:visibility="gone" />
+                />
 
         </ScrollView>
 

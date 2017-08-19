@@ -26,18 +26,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="265dp"
                 android:focusable="true"
-                app:resize_mode="fixed_width"/>
+                app:resize_mode="fixed_width">
 
+                <TextView
+                    android:id="@+id/step_no_video"
+                    style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="236dp"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:padding="8dp"
+                    android:text="@string/no_video_to_display" />
+            </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
 
-            <TextView
-                android:id="@+id/step_no_video"
-                style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:padding="8dp"
-                android:text="@string/no_video_to_display" />
 
         </FrameLayout>
         <ScrollView

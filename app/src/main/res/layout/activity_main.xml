@@ -26,15 +26,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchorGravity="center"
+        android:layout_gravity="center"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <TextView
         android:id="@+id/net_work_error_recipe"
         style="@style/Base.TextAppearance.AppCompat.Display2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|center"
         android:text="@string/network_error"

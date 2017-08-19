@@ -11,12 +11,12 @@
     <LinearLayout
         android:id="@+id/two_pane_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="428dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
