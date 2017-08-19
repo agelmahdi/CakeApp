@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="340dp"
+    android:layout_width="wrap_content"
     android:layout_height="360dp"
     android:layout_margin="8dp"
     android:foreground="?android:attr/selectableItemBackground"
